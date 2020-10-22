@@ -134,7 +134,8 @@ message-players-color () {
 }
 
 # Notify players of start
-message-players "Starting backup..." "$ARCHIVE_FILE_NAME"
+WORLD=$(basename $SERVER_WORLD)
+message-players "Starting ${WORLD} backup..." "$ARCHIVE_FILE_NAME"
 
 # Parse file timestamp to one readable by "date" 
 parse-file-timestamp () {
@@ -275,8 +276,8 @@ TIME_DELTA=$((END_TIME - START_TIME))
 
 # Check that archive size is not null and at least 1024 KB
 if [[ "$ARCHIVE_SIZE" != "" && "$ARCHIVE_SIZE_BYTES" -gt 8 ]]; then
-  message-players-success "Backup complete!" "$TIME_DELTA s, $ARCHIVE_SIZE/$BACKUP_DIRECTORY_SIZE, $COMPRESSION_PERCENT%"
+  message-players-success "${WORLD} backup complete!" "$TIME_DELTA s, $ARCHIVE_SIZE/$BACKUP_DIRECTORY_SIZE, $COMPRESSION_PERCENT%"
   delete-old-backups
 else
-  message-players-error "Backup was not saved!" "Please notify an administrator"
+  message-players-error "${WORLD} backup was not saved!" "Please notify an administrator"
 fi
